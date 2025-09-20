@@ -1,0 +1,20 @@
+name: Build PDFCompressor
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Compile with csc
+        run: |
+          mkdir out
+          "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe" /t:winexe /out:out\\PDFCompressor.exe PDFCompressor.cs
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: PDFCompressor
+          path: out\\PDFCompressor.exe
